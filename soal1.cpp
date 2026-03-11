@@ -5,17 +5,43 @@ Buat program yang meminta pengguna memasukkan sebuah kata (terdiri dari minimal 
 lalu tampilkan karakter per karakter menggunakan putchar().
 */
 
-#include <stdio.h> //untuk menggunakan printf() dan scanf()
-#include <conio.h> // untuk menggunakan getche() dan getch()
+#include <stdio.h>
+int main () {
+    char kata[100];  // Array karakter untuk menyimpan input kata (maks 100 karakter)
+    int panjang;     // Variabel untuk menyimpan panjang kata
+    
+    // Loop do-while: minimal dijalankan 1 kali, terus berulang jika kata < 10 karakter
+    do {
+        printf("Masukkan sebuah kata (minimal 10 karakter): ");
+        scanf("%s", &kata);  // Membaca input string dari pengguna
+        
+        // Menghitung panjang kata secara manual (tanpa strlen)
+        // Mulai dari indeks 0, terus tambah selama belum ketemu '\0' (akhir string)
+        panjang = 0;
+        while (kata[panjang] != '\0') {
+            panjang++;
+        }
 
-int main(){ // fungsi utama program
-    char karakter1, karakter2, karakter3; // deklarasi variabel untuk menyimpan karakter yang dimasukkan
-    printf("Masukkan karakter 1: "); // meminta pengguna untuk memasukkan karakter
-    karakter1 = getchar(); // getchar untuk membaca karakter
-    printf("Masukkan karakter 2: ");
-    karakter2 = getche(); // getche() untuk membaca karakter dan menampilkannya langsung
-    printf("\nMasukkan karakter 3: ");
-    karakter3 = getch(); // getch() untuk membaca karakter ketiga tanpa menampilkannya di layar (biasanya digunakan untuk password)
-    printf("\nKarakter yang dimasukkan: %c, %c, %c", karakter1, karakter2, karakter3); // menampilkan karakter yang telah dimasukkan
-    return 0; // mengembalikan nilai 0 untuk menandakan program selesai dengan sukses
+        // Validasi: jika panjang kurang dari 10, tampilkan pesan error
+        if (panjang < 10) {
+            printf("Kata terlalu pendek! Panjang kata: %d karakter.\n", panjang);
+            printf("Minimal 10 karakter. Mohon coba lagi!\n\n");
+        }
+    } while (panjang < 10);  // Kondisi pengulangan: ulangi jika panjang masih < 10
+    
+    // Setelah loop selesai, kata sudah valid (>= 10 karakter)
+    printf("Kata yang dimasukkan : %s\n", kata);
+    printf("Jumlah karakter      : %d\n", panjang);
+    
+    printf("Output karakter per karakter:\n");
+
+    // Loop for: mencetak setiap karakter satu per satu berdasarkan indeksnya
+    // i mulai dari 0 (indeks pertama array) sampai i < panjang (indeks terakhir)
+    for (int i = 0; i < panjang; i++) {
+        printf("Karakter ke-%2d : ", i + 1);  // Tampilkan nomor urut (mulai dari 1)
+        putchar(kata[i]);  // Cetak karakter pada indeks ke-i
+        putchar('\n');     // Pindah ke baris baru setelah tiap karakter
+    }
+
+    return 0;
 }
